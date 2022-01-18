@@ -44,26 +44,24 @@ def test_model(model, dataloader, device):
 
 if __name__ == '__main__':
     catsvdogs = CatsVSDogs()
-    dataset = catsvdogs.download()
-    dataset1 = catsvdogs.train()
+    test_set = catsvdogs.train(False)
+    train_set = catsvdogs.train(True)
     print("Number of examples :")
-    print(len(dataset1.data))
+    print(len(train_set.data))
     print("Size of each example: ")
-    print(np.shape(dataset1.data[0]))
+    print(np.shape(train_set.data[0]))
         #catsvdogs.make_training_data()
 
     # setting
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     batch_size = 128
-    test_set = dataset
     test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False)
 
     if not exists("fashion_28.pth"):
         print("Model does not exist... training...")
         model = Classifier().to(device)
-        train_set = dataset1
-        train_loader = DataLoader(dataset=dataset1, batch_size=batch_size, shuffle=True)
+        train_loader = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
 
         # device = 'cpu'
         # print(device)

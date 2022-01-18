@@ -163,20 +163,8 @@ class CatsVSDogs():
             print("Bags: ", self.bagcount)
             print("Ankle Boots: ", self.anklebootcount)
 
-    def download(self):
-        dataset = datasets.FashionMNIST(root="./data", train=False, download=True, transform=transforms.Compose([transforms.ToTensor()]))
-   #     dataset = 'shaunthesheep/microsoft-catsvsdogs-dataset'
-   #     path = 'datasets/microsoft-catsvsdogs-dataset'
-#        dataset = 'zalando-research/fashionmnist'
- #       path = 'datasets/fashionmnist'
-
-   #     api = KaggleApi()
-   #     api.authenticate()
-
-   #     api.dataset_download_files(dataset, path)
-
-  #      with zipfile.ZipFile("datasets/fashionmnist/fashionmnist.zip", "r") as z:
-  #          z.extractall("datasets/fashionmnist")
+    def download(self, trained):
+        dataset = datasets.FashionMNIST(root="./data", train=trained, download=True, transform=transforms.Compose([transforms.ToTensor()]))
         return dataset
 
     def train(self):
