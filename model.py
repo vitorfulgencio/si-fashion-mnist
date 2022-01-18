@@ -163,13 +163,9 @@ class CatsVSDogs():
             print("Bags: ", self.bagcount)
             print("Ankle Boots: ", self.anklebootcount)
 
-    def download(self, trained):
+    def train(self, trained):
         dataset = datasets.FashionMNIST(root="./data", train=trained, download=True, transform=transforms.Compose([transforms.ToTensor()]))
         return dataset
-
-    def train(self):
-        dataset1 = datasets.FashionMNIST(root="./data", train=True, download=True, transform=transforms.Compose([transforms.ToTensor()]))
-        return dataset1
 # CNN
 class Classifier(nn.Module):
     def __init__(self):
