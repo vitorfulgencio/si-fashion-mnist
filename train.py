@@ -50,7 +50,8 @@ if __name__ == '__main__':
     print(len(train_set.data))
     print("Size of each example: ")
     print(np.shape(train_set.data[0]))
-        #catsvdogs.make_training_data()
+    print("Number of testing data")
+    print(len(test_set.data))
 
     # setting
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -84,10 +85,7 @@ if __name__ == '__main__':
             for i, data in enumerate(train_loader):
                 optimizer.zero_grad()
                 x, y = data[0].to(device), data[1].to(device)
-    #            print(x.shape)
-    #            print(y.shape)
                 y_pred = model(x)
-    #            print("it passed the bad thing")
                 loss = cirection(y_pred, y.long())
                 loss.backward()
                 optimizer.step()
