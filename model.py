@@ -206,13 +206,13 @@ class Classifier(nn.Module):
             nn.ReLU(),
             nn.Linear(512, 128),
             nn.ReLU(),
-         #   nn.Linear(128, 2),
-            nn.Softmax(dim=10)
+            nn.Linear(128, 10),
+            nn.Softmax(dim=1)
         )
 
     def forward(self, x):
-        print(x.shape)
+    #    print(x.shape)
         out = self.cnn(x)
-        print("test1")
+    #    print("test1")
         out = out.view(out.size()[0], -1)
         return self.fc(out)
