@@ -6,3 +6,4 @@ This is poorly made code that basically trains a neural network to identify clot
 
 To execute it in a simple way, you just have to build the dockerfile with ```docker build -t afancyname /path/to/your/project/docker```. 
 Then you can run it with ```docker run -it -v /path/to/your/project/:/app --rm afancyname```.
+Run it a first time to generate a model and then a second one to test it.
