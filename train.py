@@ -2,6 +2,7 @@ import time
 from os.path import exists
 
 import numpy as np
+import sklearn
 import torch
 
 from torch import nn
@@ -9,7 +10,18 @@ from torch.utils.data import DataLoader
 
 from model import CatsVSDogs, Classifier
 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, f1_score
+
+
+def test_model1(model1, dataloader, device):
+    final_loader = DataLoader(dataset=dataloader, batch_size=len(dataloader.data), shuffle=True)
+    val_features, val_labels = next(iter(final_loader))
+    print(f"Feature batch shape: {val_features.size()}")
+    print("IDK WHY IT DOESN'T WORK AFTER THIS")
+    final_y = model1(val_features).to(device)
+    print("F1 Score: ")
+    print(f1_score(final_y, val_labels, average='weighted'))
+
 
 def test_model(model, dataloader, device):
     CM = 0
@@ -19,7 +31,7 @@ def test_model(model, dataloader, device):
             valx, valy = data[0].to(device), data[1].to(device)
             val_pred = model(valx)
             preds = torch.argmax(val_pred.data, 1)
-            CM += confusion_matrix(valy.cpu(), preds.cpu(), labels=[0, 1])
+            CM += confusion_matrix(valy.cpu(), preds.cpu(), labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
         tn = CM[0][0]
         tp = CM[1][1]
@@ -42,7 +54,9 @@ def test_model(model, dataloader, device):
 
     return acc, CM
 
+
 if __name__ == '__main__':
+
     catsvdogs = CatsVSDogs()
     test_set = catsvdogs.train(False)
     train_set = catsvdogs.train(True)
@@ -110,6 +124,5 @@ if __name__ == '__main__':
     else:
         print("Model available... loading...")
         # Loading the saved model
-        model=torch.load("fashion_28.pth")
-        test_model(model, test_set, device)
-
+        model = torch.load("fashion_28.pth")
+        test_model1(model, test_set, device)
